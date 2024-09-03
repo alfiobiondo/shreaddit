@@ -1,5 +1,6 @@
 import { Flex, Image } from '@chakra-ui/react';
 import React from 'react';
+import SearchInput from './SearchInput';
 
 const Navbar: React.FC = () => {
 	return (
@@ -11,12 +12,15 @@ const Navbar: React.FC = () => {
 					height='30px'
 				/>
 				<Image
-					src='/images/redditText.svg'
+					src='/images/shredditText.svg'
 					alt='reddit logo text'
 					height='46px'
 					display={{ base: 'none', md: 'unset' }}
 				/>
 			</Flex>
+			<SearchInput />
+			{/* 			<Directory/>
+			<RightContent/> */}
 		</Flex>
 	);
 };
