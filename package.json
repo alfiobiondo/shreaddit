@@ -6,7 +6,9 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "next lint",
+		"theme": "chakra-cli tokens ./src/chakra/theme.ts",
+		"theme:watch": "chakra-cli tokens ./src/chakra/theme.ts --watch"
 	},
 	"dependencies": {
 		"@chakra-ui/icons": "^2.1.1",
@@ -24,6 +26,7 @@
 		"recoil": "^0.7.7"
 	},
 	"devDependencies": {
+		"@chakra-ui/cli": "^2.4.1",
 		"@types/node": "^20",
 		"@types/react": "^18",
 		"@types/react-dom": "^18",
