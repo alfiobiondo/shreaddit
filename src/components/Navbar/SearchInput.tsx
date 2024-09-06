@@ -8,7 +8,7 @@ type SearchInputProps = {
 
 const SearchInput: React.FC<SearchInputProps> = () => {
 	return (
-		<Flex flexGrow={1} me={2} align='center'>
+		<Flex flexGrow={1} mr={2} align='center'>
 			<InputGroup>
 				<InputLeftElement pointerEvents='none'>
 					<SearchIcon color='gray.400' mb={1} />
