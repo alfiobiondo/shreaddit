@@ -92,7 +92,7 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
 
 				// Create communitySnippet on user
 				transaction.set(
-					doc(firestore, `users/${user?.uid}/communitySnippet`, communityName),
+					doc(firestore, `users/${user?.uid}/communitySnippets`, communityName),
 					{
 						communityId: communityName,
 						isModerator: true,
