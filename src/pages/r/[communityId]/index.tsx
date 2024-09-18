@@ -5,8 +5,8 @@ import { firestore } from '@/firebase/clientApp';
 import { doc, getDoc } from 'firebase/firestore';
 import { Community } from '@/atoms/communityAtom';
 import safeJsonStringify from 'safe-json-stringify';
-import NotFound from '@/components/community/NotFound';
-import Header from '@/components/community/Header';
+import NotFound from '@/components/Community/NotFound';
+import Header from '@/components/Community/Header';
 import PageContent from '@/components/Layout/PageContent';
 
 type CommunityPageProps = {
@@ -14,8 +14,6 @@ type CommunityPageProps = {
 };
 
 const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
-	console.log('here is data', communityData);
-
 	if (!communityData) {
 		return <NotFound />;
 	}
