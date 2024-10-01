@@ -135,9 +135,16 @@ const useCommunityData = () => {
 	};
 
 	useEffect(() => {
-		if (!user) return;
+		if (!user) {
+			// Clear user snippets
+			setCommunityStateValue((prev) => ({
+				...prev,
+				mySnippets: [],
+			}));
+			return;
+		}
 		getMySnippets();
-	}, [user, getMySnippets]);
+	}, [user, getMySnippets, setCommunityStateValue]);
 
 	return {
 		// data and functions
