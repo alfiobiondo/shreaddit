@@ -30,7 +30,6 @@ type AboutProps = {
 };
 
 const About: React.FC<AboutProps> = ({ communityData }) => {
-	const router = useRouter();
 	const [user] = useAuthState(auth);
 	const selectedFileRef = useRef<HTMLInputElement>(null);
 	const { selectedFile, setSelectedFile, onSelectFile } = useSelectFile();
@@ -45,7 +44,7 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
 			await uploadString(imageRef, selectedFile, 'data_url');
 			const downloadUrl = await getDownloadURL(imageRef);
 			await updateDoc(doc(firestore, 'communities', communityData.id), {
-				imageURL: downloadUrl,
+				imageUrl: downloadUrl,
 			});
 
 			setCommunityStateValue((prev) => ({
@@ -107,7 +106,7 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
 						)}
 					</Flex>
 					<Flex>
-						<Link href={`/r/${router.query.communityId}/submit`}>
+						<Link href={`/r/${communityData.id}/submit`}>
 							<Button mt={3} height='30px'>
 								Create Post
 							</Button>
