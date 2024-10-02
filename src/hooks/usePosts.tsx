@@ -24,7 +24,15 @@ const usePosts = () => {
 	const setAuthModalState = useSetRecoilState(authModalState);
 	const router = useRouter();
 
-	const onVote = async (post: Post, vote: number, communityId: string) => {
+	const onVote = async (
+		event: React.MouseEvent<SVGElement, MouseEvent>,
+		post: Post,
+		vote: number,
+		communityId: string
+	) => {
+		// Stop event propagation
+		event.stopPropagation();
+
 		// check for a user => if not, open auth modal
 		if (!user) {
 			setAuthModalState({ open: true, view: 'login' });
@@ -123,6 +131,13 @@ const usePosts = () => {
 				posts: updatedPosts,
 				postVotes: updatedPostVotes,
 			}));
+
+			if (postStateValue.selectedPost) {
+				setPostStateValue((prev) => ({
+					...prev,
+					selectedPost: updatedPost,
+				}));
+			}
 		} catch (error) {
 			console.log('onVote error', error);
 		}
