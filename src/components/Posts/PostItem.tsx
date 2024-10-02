@@ -30,7 +30,7 @@ type PostItemProps = {
 	userIsCreator: boolean;
 	userVoteValue?: number;
 	onVote: (post: Post, vote: number, communityId: string) => void;
-	onSelectPost: () => void;
+	onSelectPost?: (post: Post) => void;
 	onDeletePost: (post: Post) => Promise<boolean>;
 };
 
@@ -45,6 +45,8 @@ const PostItem: React.FC<PostItemProps> = ({
 	const [loadingImage, setLoadingImage] = useState(true);
 	const [loadingDelete, setLoadingDelete] = useState(false);
 	const [error, setError] = useState(false);
+
+	const singlePostPage = !onSelectPost;
 
 	const handleDelete = async () => {
 		setLoadingDelete(true);
@@ -66,19 +68,19 @@ const PostItem: React.FC<PostItemProps> = ({
 		<Flex
 			border='1px solid'
 			bg='white'
-			borderColor='gray.300'
-			borderRadius={4}
-			_hover={{ borderColor: 'gray.500' }}
-			cursor='pointer'
-			onClick={onSelectPost}
+			borderColor={singlePostPage ? 'white' : 'gray.300'}
+			borderRadius={singlePostPage ? '4px 4px 0px 0px' : '4px'}
+			_hover={{ borderColor: singlePostPage ? 'none' : 'gray.500' }}
+			cursor={singlePostPage ? 'unset' : 'pointer'}
+			onClick={() => onSelectPost && onSelectPost(post)}
 		>
 			<Flex
 				direction='column'
 				align='center'
-				bg='gray.100'
+				bg={singlePostPage ? 'none' : 'gray.100'}
 				p={2}
 				width='40px'
-				borderRadius={4}
+				borderRadius={singlePostPage ? '0' : '3px 0px 0px 3px'}
 			>
 				<Icon
 					as={

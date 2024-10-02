@@ -12,6 +12,7 @@ import {
 	writeBatch,
 } from 'firebase/firestore';
 import { deleteObject, ref } from 'firebase/storage';
+import { useRouter } from 'next/router';
 import React, { useCallback, useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
@@ -21,6 +22,7 @@ const usePosts = () => {
 	const [postStateValue, setPostStateValue] = useRecoilState(postState);
 	const currentCommunity = useRecoilValue(CommunityState).currentCommunity;
 	const setAuthModalState = useSetRecoilState(authModalState);
+	const router = useRouter();
 
 	const onVote = async (post: Post, vote: number, communityId: string) => {
 		// check for a user => if not, open auth modal
@@ -126,7 +128,13 @@ const usePosts = () => {
 		}
 	};
 
-	const onSelectPost = () => {};
+	const onSelectPost = (post: Post) => {
+		setPostStateValue((prev) => ({
+			...prev,
+			selectedPost: post,
+		}));
+		router.push(`/r/${post.communityId}/comments/${post.id}`);
+	};
 
 	const onDeletePost = async (post: Post): Promise<boolean> => {
 		try {
