@@ -41,12 +41,11 @@ const CommentInput: React.FC<CommentInputProps> = ({
 							outline: 'none',
 							bg: 'white',
 							border: '1px solid black',
-							boxShadow: 'none',
 						}}
 					/>
 					<Flex
 						position='absolute'
-						left='0.1px'
+						left='0.3px'
 						right={0.3}
 						bottom='1px'
 						justify='flex-end'
