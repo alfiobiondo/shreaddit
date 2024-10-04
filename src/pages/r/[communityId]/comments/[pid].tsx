@@ -6,6 +6,7 @@ import PostItem from '@/components/Posts/PostItem';
 import { auth, firestore } from '@/firebase/clientApp';
 import useCommunityData from '@/hooks/useCommunityData';
 import usePosts from '@/hooks/usePosts';
+import { User } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect } from 'react';
