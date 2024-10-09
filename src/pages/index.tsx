@@ -1,5 +1,5 @@
 import { CommunityState } from '@/atoms/communityAtom';
-import { Post } from '@/atoms/postsAtom';
+import { Post, PostVote } from '@/atoms/postsAtom';
 import CreatePostLink from '@/components/Community/CreatePostLink';
 import PageContent from '@/components/Layout/PageContent';
 import PostItem from '@/components/Posts/PostItem';
@@ -92,7 +92,30 @@ const Home: NextPage = () => {
 		setLoading(false);
 	}, [buildNoUserHomeFeed, communityStateValue.mySnippets, setPostStateValue]);
 
-	const getUserPostVotes = () => {};
+	const getUserPostVotes = useCallback(async () => {
+		try {
+			const postIds = postStateValue.posts.map((post) => post.id);
+
+			const postVotesQuery = query(
+				collection(firestore, `users/${user?.uid}/postVotes`),
+				where('postId', 'in', postIds)
+			);
+
+			const postVotesDoc = await getDocs(postVotesQuery);
+
+			const postVotes = postVotesDoc.docs.map((doc) => ({
+				id: doc.id,
+				...doc.data(),
+			}));
+
+			setPostStateValue((prev) => ({
+				...prev,
+				postVotes: postVotes as PostVote[],
+			}));
+		} catch (error) {
+			console.log('getUserPostVotes error', error);
+		}
+	}, [postStateValue.posts, user?.uid, setPostStateValue]);
 
 	// useEffects
 	useEffect(() => {
@@ -102,6 +125,19 @@ const Home: NextPage = () => {
 	useEffect(() => {
 		if (!user && !loadingUser) buildNoUserHomeFeed();
 	}, [user, loadingUser, buildNoUserHomeFeed]);
+
+	useEffect(() => {
+		if (user && postStateValue.posts.length) getUserPostVotes();
+
+		// cleanup finction
+		return () => {
+			// clear post votes when user logs out
+			setPostStateValue((prev) => ({
+				...prev,
+				postVotes: [],
+			}));
+		};
+	}, [user, postStateValue.posts, getUserPostVotes, setPostStateValue]);
 
 	return (
 		<PageContent>
