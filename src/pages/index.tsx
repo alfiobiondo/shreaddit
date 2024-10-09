@@ -5,9 +5,17 @@ import PageContent from '@/components/Layout/PageContent';
 import PostItem from '@/components/Posts/PostItem';
 import PostLoader from '@/components/Posts/PostLoader';
 import { auth, firestore } from '@/firebase/clientApp';
+import useCommunityData from '@/hooks/useCommunityData';
 import usePosts from '@/hooks/usePosts';
 import { Stack } from '@chakra-ui/react';
-import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
+import {
+	collection,
+	getDocs,
+	limit,
+	orderBy,
+	query,
+	where,
+} from 'firebase/firestore';
 import type { NextPage } from 'next';
 import { useCallback, useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -23,11 +31,7 @@ const Home: NextPage = () => {
 		onDeletePost,
 		onVote,
 	} = usePosts();
-	const communityStateValue = useRecoilValue(CommunityState);
-
-	const buildUserHomeFeed = () => {
-		// fetch some posts from each community the user is in
-	};
+	const { communityStateValue } = useCommunityData();
 
 	const buildNoUserHomeFeed = useCallback(async () => {
 		setLoading(true);
@@ -53,9 +57,48 @@ const Home: NextPage = () => {
 		setLoading(false);
 	}, [setPostStateValue]);
 
+	const buildUserHomeFeed = useCallback(async () => {
+		setLoading(true);
+		try {
+			if (communityStateValue.mySnippets.length) {
+				// get posts from users' communities
+				const myCommunityIds = communityStateValue.mySnippets.map(
+					(snippet) => snippet.communityId
+				);
+
+				const postQuery = query(
+					collection(firestore, 'posts'),
+					where('communityId', 'in', myCommunityIds),
+					limit(10)
+				);
+
+				const postDocs = await getDocs(postQuery);
+
+				const posts = postDocs.docs.map((doc) => ({
+					id: doc.id,
+					...doc.data(),
+				}));
+
+				setPostStateValue((prev) => ({
+					...prev,
+					posts: posts as Post[],
+				}));
+			} else {
+				buildNoUserHomeFeed();
+			}
+		} catch (error) {
+			console.log('buildUserHomeFeed error', error);
+		}
+		setLoading(false);
+	}, [buildNoUserHomeFeed, communityStateValue.mySnippets, setPostStateValue]);
+
 	const getUserPostVotes = () => {};
 
 	// useEffects
+	useEffect(() => {
+		if (communityStateValue.snippetsFetched) buildUserHomeFeed();
+	}, [buildUserHomeFeed, communityStateValue.snippetsFetched]);
+
 	useEffect(() => {
 		if (!user && !loadingUser) buildNoUserHomeFeed();
 	}, [user, loadingUser, buildNoUserHomeFeed]);
