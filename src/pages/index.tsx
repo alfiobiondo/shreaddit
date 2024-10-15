@@ -1,6 +1,6 @@
 import { CommunityState } from '@/atoms/communityAtom';
 import { Post, PostVote } from '@/atoms/postsAtom';
-import CreatePostLink from '../components/Community/CreatePostLink';
+import CreatePostLink from '@/components/Community/CreatePostLink';
 import PersonalHome from '@/components/Community/PersonalHome';
 import Premium from '@/components/Community/Premium';
 import Recommendations from '@/components/Community/Recommendations';
