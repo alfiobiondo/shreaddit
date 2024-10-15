@@ -1,10 +1,10 @@
 # Shreaddit
 
-NYouTube is a youtube clone made with react, redux, firebase and Youtube API.
+NYouTube is a youtube clone made with Next.js, Typescript, Recoil (State Management), Chakra UI and firebase.
 
 ![Image](./public/images/shreadditLogo.jpg)
 
-## The project is deployed on Firebase
+## The project is deployed on Vercel
 
 [shreaddit.vercel.app](https://shreaddit-r8b1aw45l-alfio-biondos-projects.vercel.app/)
 
