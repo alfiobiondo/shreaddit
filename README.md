@@ -1,6 +1,6 @@
 # Shreaddit
 
-NYouTube is a youtube clone made with Next.js, Typescript, Recoil (State Management), Chakra UI and firebase.
+Shreaddit is a reddit clone made with Next.js, Typescript, Recoil (State Management), Chakra UI and firebase.
 
 ![Image](./public/images/shreadditLogo.jpg)
 
