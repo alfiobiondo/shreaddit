@@ -22,7 +22,7 @@ const Directory: React.FC = () => {
 	const { directoryState, toggleMenuOpen } = useDirectory();
 
 	return (
-		<Menu isOpen={directoryState.isOpen}>
+		<Menu isOpen={directoryState.isOpen} onClose={toggleMenuOpen}>
 			<MenuButton
 				cursor='pointer'
 				padding='0px 6px'
