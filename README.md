@@ -6,7 +6,7 @@ Shreaddit is a reddit clone made with Next.js, Typescript, Recoil (State Managem
 
 ## The project is deployed on Vercel
 
-[shreaddit.vercel.app](shreaddit.vercel.app)
+[shreaddit.vercel.app](https://shreaddit.vercel.app)
 
 ## Contributing
 
